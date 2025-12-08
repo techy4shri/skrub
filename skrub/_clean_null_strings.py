@@ -1,5 +1,5 @@
 from . import _dataframe as sbd
-from ._apply_to_cols import RejectColumn, SingleColumnTransformer
+from ._single_column_transformer import RejectColumn, SingleColumnTransformer
 from ._dispatch import dispatch, raise_dispatch_unregistered_type
 
 __all__ = ["CleanNullStrings"]
