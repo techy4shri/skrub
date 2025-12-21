@@ -1,7 +1,4 @@
-import functools
 import itertools
-import re
-import textwrap
 
 from joblib import Parallel, delayed
 from sklearn.base import BaseEstimator, TransformerMixin, clone
@@ -10,6 +7,7 @@ from sklearn.utils.validation import check_is_fitted
 from . import _dataframe as sbd
 from . import _utils, selectors
 from ._join_utils import pick_column_names
+from ._single_column_transformer import RejectColumn
 
 __all__ = ["ApplyToCols"]
 
@@ -24,10 +22,7 @@ class ApplyToCols(TransformerMixin, BaseEstimator):
 
     All columns not listed in ``cols`` remain unmodified in the output.
     Moreover, if ``allow_reject`` is ``True`` and the transformers'
-    ``fit_transform`` raises a ``RejectColumn`` exception for a particular
-    column, that column is passed through unchanged. If ``allow_reject`` is
-    ``False``, ``RejectColumn`` exceptions are propagated, like other errors
-    raised by the transformer.
+
 
     .. note::
 

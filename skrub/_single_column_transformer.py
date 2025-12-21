@@ -1,13 +1,15 @@
 """
-    a signle place for all the single column transformers
+A single place for all the single column transformers.
 """
+
 import functools
-import itertools
 import re
 import textwrap
 
-from joblib import Parallel, delayed
+from sklearn.base import BaseEstimator
+from sklearn.utils.validation import check_is_fitted
 
+from . import _dataframe as sbd
 
 _SINGLE_COL_LINE = (
     "``{class_name}`` is a type of single-column transformer. Unlike most scikit-learn"
@@ -27,8 +29,13 @@ _SINGLE_COL_NOTE = f".. note::\n\n{_SINGLE_COL_PARAGRAPH}\n"
 
 __all__ = ["SingleColumnTransformer", "RejectColumn"]
 
+
 class RejectColumn(ValueError):
     """Used by single-column transformers to indicate they do not apply to a column.
+    ``fit_transform`` raises a ``RejectColumn`` exception for a particular
+    column, that column is passed through unchanged. If ``allow_reject`` is
+    ``False``, ``RejectColumn`` exceptions are propagated, like other errors
+    raised by the transformer.
 
     >>> import pandas as pd
     >>> from skrub import ToDatetime
@@ -210,5 +217,3 @@ def _insert_after_first_paragraph(document, text_to_insert):
     output_lines.append("\n")
     output_lines.extend(doc_lines)
     return "".join(output_lines)
-
-

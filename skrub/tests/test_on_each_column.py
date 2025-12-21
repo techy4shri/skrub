@@ -10,12 +10,9 @@ from sklearn.preprocessing import OneHotEncoder
 
 from skrub import _dataframe as sbd
 from skrub import selectors as s
-from skrub._apply_to_cols import (
-    ApplyToCols,
-    RejectColumn,
-    SingleColumnTransformer,
-)
+from skrub._apply_to_cols import ApplyToCols
 from skrub._select_cols import Drop
+from skrub._single_column_transformer import RejectColumn, SingleColumnTransformer
 
 
 @pytest.mark.parametrize("define_fit", [False, True])
